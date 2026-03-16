@@ -25,82 +25,66 @@ with st.sidebar:
     }, hide_index=True)
     st.markdown("---")
 
-# 3. Platinum UI Styling (Refined Glassmorphism)
+# 3. Global SOC Command Center UI Styling
 st.markdown("""
-    <style>
-    .stApp { background-color: #0E1117; }
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
-    
-    /* Optimized Glassmorphism Containers */
-    div[data-testid="stMetric"], .stTabs, .element-container, div.stAlert, .stExpander, .stContainer {
-        background: rgba(30, 34, 45, 0.6) !important;
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.1) !important;
-        border-radius: 15px !important;
-        padding: 20px;
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-        margin-bottom: 1.5rem;
-        transition: all 0.3s ease-in-out;
+<style>
+    /* Force Pure Black Background */
+    .stApp {
+        background-color: #050505 !important;
     }
     
-    div[data-testid="stMetric"]:hover {
-        transform: translateY(-5px);
-        border-color: rgba(0, 255, 65, 0.4) !important;
-    }
-
-    .stMetric label { 
-        color: #00FF41 !important; 
-        text-transform: uppercase; 
-        letter-spacing: 1.5px; 
-        font-weight: 600;
+    /* Tactical Sidebar */
+    [data-testid="stSidebar"] {
+        background-color: #0A0A0A !important;
+        border-right: 1px solid #00FF41 !important;
     }
     
-    .stAlert { border-left: 5px solid #FF3131 !important; }
-    
-    /* Header & HUD Elements */
-    .hud-header { 
-        display: flex; 
-        justify-content: space-between; 
-        align-items: center; 
-        background: rgba(10, 10, 10, 0.95); 
-        padding: 20px 40px; 
-        border-bottom: 2px solid #00FF41; 
-        margin-bottom: 25px; 
-        border-radius: 0 0 20px 20px;
-        box-shadow: 0 4px 20px rgba(0, 255, 65, 0.2);
+    /* Glowing Neon Metric Boxes */
+    [data-testid="stMetric"] {
+        background-color: #111111 !important;
+        border: 1px solid #00FF41 !important;
+        padding: 15px !important;
+        border-radius: 4px !important;
+        box-shadow: 0 0 15px rgba(0, 255, 65, 0.1) !important;
     }
     
-    .status-indicator { display: flex; flex-direction: column; align-items: flex-end; }
-    .live-status { display: flex; align-items: center; color: #00FF41; font-weight: bold; font-family: 'Courier New', Courier, monospace; font-size: 14px; }
-    
-    .blink { 
-        width: 10px; height: 10px; background-color: #00FF41; border-radius: 50%; 
-        margin-right: 12px; animation: blinker 1.5s linear infinite; 
+    /* Neon Green Labels */
+    [data-testid="stMetricLabel"] * {
+        color: #00FF41 !important;
+        font-weight: bold !important;
+        text-transform: uppercase !important;
+        letter-spacing: 1.5px !important;
+        font-family: 'Courier New', Courier, monospace !important;
     }
-    @keyframes blinker { 50% { opacity: 0; } }
     
-    section[data-testid="stSidebar"] { 
-        background-color: rgba(15, 15, 15, 0.98) !important; 
-        border-right: 1px solid #333; 
+    /* Stark White Data Values */
+    [data-testid="stMetricValue"] {
+        color: #FFFFFF !important;
+        font-family: 'Courier New', Courier, monospace !important;
     }
-    .main .block-container { padding-top: 1rem; max-width: 95%; }
     
-    /* Typography Polish */
-    h1, h2, h3 { letter-spacing: -0.5px; }
-    </style>
+    /* Override Headers to Tactical Green */
+    h1, h2, h3 {
+        color: #00FF41 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 2px !important;
+        border-bottom: 1px solid rgba(0, 255, 65, 0.3) !important;
+        padding-bottom: 5px !important;
+        font-family: 'Courier New', Courier, monospace !important;
+    }
     
-    <div class="hud-header">
-        <div style="color: white; font-size: 26px; font-weight: bold; letter-spacing: 2px;">
-            <span style="color: #00FF41;">[</span> CYBER-DETECTOR PRO <span style="color: #00FF41;">]</span>
-        </div>
-        <div class="status-indicator">
-            <div class="live-status"><div class="blink"></div> AI DEFENSE ACTIVE: FULL PROTECTION</div>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+    /* Sleek Dataframes */
+    [data-testid="stDataFrame"] {
+        border: 1px solid #00FF41 !important;
+    }
+    
+    /* Make standard text silver for readability */
+    p, li {
+        color: #CCCCCC !important;
+        font-family: 'Courier New', Courier, monospace !important;
+    }
+</style>
+""", unsafe_allow_html=True)
 
 # 4. Secure Artifact Loading
 @st.cache_resource

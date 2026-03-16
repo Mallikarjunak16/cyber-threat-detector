@@ -1,0 +1,7 @@
+venv/
+__pycache__/
+.cache/
+*.pkl
+model_accuracy.txt
+model_stats.txt
+.streamlit/config.toml

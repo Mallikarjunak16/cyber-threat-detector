@@ -36,7 +36,8 @@ In cybersecurity, a 0% False Positive Rate (FPR) is the industry "Holy Grail." B
 3. **Temporal Anomaly Tracking:** Real-time visual integrations mapping protocol states against threat classifications.
 4. **Industry Baseline Analytics:** Built-in comparison tables proving superiority over legacy IDS (Snort) and standard Enterprise NDRs.
 
-## 🛠️ Installation & Execution
+## 🛠️ Local Installation & Execution (For Judges & Developers)
+*Note: The platform is already live globally via the link at the top. The following steps are only required if you wish to run the AI model and SOC Command Center locally on your own hardware.*
 
 **1. Clone the repository:**
 ```bash

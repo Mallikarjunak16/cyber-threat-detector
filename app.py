@@ -168,11 +168,12 @@ with st.sidebar.expander("⚙️ Advanced Settings"):
 # 8. Executive Summary & Value Proposition
 with st.container():
     st.markdown("### 🏛️ Executive Summary: Stacking Ensemble Defense")
-    st.write("""
-    This enterprise-grade defense system utilizes a **Hybrid Stacking Ensemble** (XGBoost + RandomForest + LightGBM) to deliver **99.54% Precision**. 
-    By combining multiple AI architectures, the system identifies both known attack signatures and novel **Zero-Day anomalies** with ultra-low false alarms, 
-    triggering instant autonomous countermeasures via our integrated SOAR engine.
-    """)
+   st.markdown("""
+* 🛡️ **Architecture:** Hybrid Stacking Ensemble (XGBoost + RandomForest + LightGBM).
+* 🎯 **Performance:** 99.54% Precision with 0.90% False Positive Rate.
+* 🔍 **Detection:** Specialized in identifying novel Zero-Day anomalies.
+* ⚡ **Mitigation:** Instant autonomous countermeasures via integrated SOAR engine.
+""")
 
 # 9. Main Dashboard Feed
 if live_monitor:

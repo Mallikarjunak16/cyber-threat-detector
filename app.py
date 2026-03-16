@@ -167,11 +167,12 @@ with st.sidebar.expander("⚙️ Advanced Settings"):
         st.rerun()
 
 # 7. Executive Summary & Value Proposition
-st.markdown("### 🏛️ Executive Summary: Stacking Ensemble Defense")
-st.write("""
-This enterprise-grade defense system utilizes a **Hybrid Stacking Ensemble** (XGBoost + RandomForest + LightGBM) to deliver **99.54% Precision**. 
-By combining multiple AI architectures, the system identifies both known attack signatures and novel **Zero-Day anomalies** with ultra-low false alarms, 
-triggering instant autonomous countermeasures via our integrated SOAR engine.
+st.markdown("### 🏛️ Executive Summary: Advanced Threat Defense")
+st.markdown("""
+- 🛡️ **Architecture**: Hybrid Stacking Ensemble (XGBoost + RandomForest + LightGBM).
+- 🎯 **Performance**: 99.54% Precision with 0.90% False Positive Rate.
+- 🔍 **Detection**: Specialized in identifying novel Zero-Day anomalies.
+- ⚡ **Mitigation**: Instant autonomous countermeasures via integrated SOAR engine.
 """)
 
 # 8. Main Dashboard Feed Logic
@@ -224,13 +225,15 @@ with hud_container:
     c1, c2 = st.columns(2)
     with c1:
         st.markdown("#### Network Protocol Intelligence")
-        p_fig = px.bar(st.session_state.history['proto'].value_counts().reset_index(), x='proto', y='count', template="plotly_dark", color_discrete_sequence=['#00FF41'])
-        p_fig.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', yaxis=dict(title="Packet Volume", showgrid=True, gridcolor='#333', range=[0, 20]), xaxis=dict(title="Protocol Type", showgrid=False), height=400)
+        p_counts = st.session_state.history['proto'].value_counts().reset_index()
+        p_fig = px.bar(p_counts, x='proto', y='count', template="plotly_dark", color_discrete_sequence=['#00FF41'])
+        p_fig.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', yaxis=dict(title="Packet Volume", showgrid=True, gridcolor='#333'), xaxis=dict(title="Protocol Type", showgrid=False), height=400)
         st.plotly_chart(p_fig, use_container_width=True, height=400)
     with c2:
         st.markdown("#### Connection State Visibility")
-        s_fig = px.bar(st.session_state.history['state'].value_counts().reset_index(), x='state', y='count', template="plotly_dark", color_discrete_sequence=['#FF3131'])
-        s_fig.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', yaxis=dict(title="Connection Frequency", showgrid=True, gridcolor='#333', range=[0, 20]), xaxis=dict(title="State Identifier", showgrid=False), height=400)
+        s_counts = st.session_state.history['state'].value_counts().reset_index()
+        s_fig = px.bar(s_counts, x='state', y='count', template="plotly_dark", color_discrete_sequence=['#FF3131'])
+        s_fig.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', yaxis=dict(title="Connection Frequency", showgrid=True, gridcolor='#333'), xaxis=dict(title="State Identifier", showgrid=False), height=400)
         st.plotly_chart(s_fig, use_container_width=True, height=400)
 
     # ROW 4: Audit & Benchmarking

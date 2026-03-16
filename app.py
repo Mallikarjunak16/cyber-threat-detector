@@ -62,7 +62,7 @@ def load_soc_engine():
 
 ensemble_model, iso_model, scaler, label_encoders = load_soc_engine()
 
-@st.cache_data
+@st.cache_data(show_spinner="📥 Initializing Neural Feed...")
 def load_production_data():
     dataset_path = kagglehub.dataset_download('mrwellsdavid/unsw-nb15')
     return pd.read_csv(f"{dataset_path}/UNSW_NB15_testing-set.csv")

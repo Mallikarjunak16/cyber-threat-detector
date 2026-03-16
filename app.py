@@ -9,13 +9,12 @@ import kagglehub
 # 1. Production SOC Configuration
 st.set_page_config(
     layout="wide",
-    page_title="CYBER HUD | ENTERPRISE AI DEFENSE",
+    page_title="TriLogic | ENTERPRISE AI DEFENSE",
     initial_sidebar_state="expanded"
 )
-
 # 2. Forcibly Add Sidebar Code
 with st.sidebar:
-    st.markdown("### 🧬 Enterprise Health")
+    st.markdown("### 🧬 TriLogic System Health")
     st.info("🛡️ PRECISION: 99.54% | FPR: 0.90%")
     st.markdown("### 📊 Market Intelligence")
     st.dataframe({
@@ -152,7 +151,7 @@ with st.sidebar.expander("⚙️ Advanced Settings"):
 
 # 8. Executive Summary & Value Proposition
 with st.container():
-    st.markdown("### 🏛️ Executive Summary: Stacking Ensemble Defense")
+st.markdown("### 🏛️ TriLogic Executive Summary: Stacking Ensemble Defense")
     st.markdown("""
     * 🛡️ **Architecture:** Hybrid Stacking Ensemble (XGBoost + RandomForest + LightGBM).
     * 🎯 **Performance:** 99.54% Precision with 0.90% False Positive Rate.

@@ -13,7 +13,18 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# 2. Platinum UI Styling (Refined Glassmorphism)
+# 2. Forcibly Add Sidebar Code
+st.sidebar.markdown("### 🧬 Enterprise Health")
+st.sidebar.info("🛡️ PRECISION: 99.54% | FPR: 0.90%")
+st.sidebar.markdown("### 📊 Market Intelligence")
+st.sidebar.dataframe({
+    "System": ["Legacy IDS", "Standard ML", "Cyber v2.0"], 
+    "Precision": ["85.00%", "94.00%", "99.54%"], 
+    "FPR": ["7.00%", "3.00%", "0.90%"]
+}, hide_index=True)
+st.sidebar.markdown("---")
+
+# 3. Platinum UI Styling (Refined Glassmorphism)
 st.markdown("""
     <style>
     .stApp { background-color: #0E1117; }
@@ -90,7 +101,7 @@ st.markdown("""
     </div>
     """, unsafe_allow_html=True)
 
-# 3. Secure Artifact Loading
+# 4. Secure Artifact Loading
 @st.cache_resource
 def load_soc_engine():
     ensemble_model = joblib.load('ensemble_model.pkl')
@@ -108,7 +119,7 @@ def load_production_data():
 
 dataset = load_production_data()
 
-# 4. Neural Processing Core
+# 5. Neural Processing Core
 def neural_ingestion(rows_df):
     results = []
     for _, row in rows_df.iterrows():
@@ -134,26 +145,14 @@ def neural_ingestion(rows_df):
         })
     return results
 
-# 5. Session State Management
+# 6. Session State Management
 if 'history' not in st.session_state:
     st.session_state.history = pd.DataFrame(neural_ingestion(dataset.sample(20)))
 
 if 'soar_log' not in st.session_state:
     st.session_state.soar_log = pd.DataFrame(columns=['Timestamp', 'Target IP', 'Autonomous Action', 'Risk Level'])
 
-# 6. Sidebar (Static Benchmarks & Control)
-st.sidebar.markdown("### 🧬 Enterprise Health")
-st.sidebar.info("PRECISION: 99.54% | FPR: 0.90%", icon="🛡️")
-
-with st.sidebar.expander("📊 Market Intelligence", expanded=False):
-    market_data = {
-        'System': ['Legacy IDS', 'Standard ML', 'Cyber v2.0'],
-        'Precision': ['85.00%', '94.00%', '99.54%'],
-        'FPR': ['7.00%', '3.00%', '0.90%']
-    }
-    st.sidebar.dataframe(pd.DataFrame(market_data), hide_index=True)
-
-st.sidebar.markdown("---")
+# 7. Sidebar Control
 st.sidebar.markdown("### 📡 Core Command")
 live_monitor = st.sidebar.toggle("Activate Live Defense Feed", value=True)
 
@@ -166,7 +165,7 @@ with st.sidebar.expander("⚙️ Advanced Settings"):
         st.session_state.soar_log = pd.DataFrame(columns=['Timestamp', 'Target IP', 'Autonomous Action', 'Risk Level'])
         st.rerun()
 
-# 7. Executive Summary & Value Proposition
+# 8. Executive Summary & Value Proposition
 with st.container():
     st.markdown("### 🏛️ Executive Summary: Stacking Ensemble Defense")
     st.write("""
@@ -175,7 +174,7 @@ with st.container():
     triggering instant autonomous countermeasures via our integrated SOAR engine.
     """)
 
-# 8. Main Dashboard Feed
+# 9. Main Dashboard Feed
 if live_monitor:
     new_data = neural_ingestion(dataset.sample(1))[0]
     st.session_state.history = pd.concat([st.session_state.history, pd.DataFrame([new_data])], ignore_index=True)

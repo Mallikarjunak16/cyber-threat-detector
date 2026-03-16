@@ -3,10 +3,12 @@ import numpy as np
 import joblib
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, classification_report, confusion_matrix, roc_curve
 import os
+import kagglehub
 
 def final_evaluate():
     # Define paths
-    csv_path = "/Users/mallikarjunak/.cache/kagglehub/datasets/mrwellsdavid/unsw-nb15/versions/1/UNSW_NB15_testing-set.csv"
+    dataset_path = kagglehub.dataset_download('mrwellsdavid/unsw-nb15')
+    csv_path = f"{dataset_path}/UNSW_NB15_testing-set.csv"
     model_path = 'ensemble_model.pkl'
     scaler_path = 'scaler.pkl'
     encoder_path = 'label_encoders.pkl'

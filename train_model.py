@@ -9,6 +9,7 @@ from sklearn.model_selection import train_test_split
 from imblearn.over_sampling import SMOTE
 import joblib
 import os
+import kagglehub
 
 def preprocess_data(df, label_encoders=None, is_training=True):
     df = df.copy()
@@ -47,7 +48,8 @@ def preprocess_data(df, label_encoders=None, is_training=True):
         return X, y
 
 def train_and_save_model():
-    csv_path = "/Users/mallikarjunak/.cache/kagglehub/datasets/mrwellsdavid/unsw-nb15/versions/1/UNSW_NB15_testing-set.csv"
+    dataset_path = kagglehub.dataset_download('mrwellsdavid/unsw-nb15')
+    csv_path = f"{dataset_path}/UNSW_NB15_testing-set.csv"
     print(f"Loading dataset from {csv_path}...")
     df = pd.read_csv(csv_path)
     

@@ -153,7 +153,7 @@ with st.sidebar.expander("📊 Market Intelligence", expanded=False):
     }
     st.sidebar.dataframe(pd.DataFrame(market_data), hide_index=True)
 
-# CORE COMMAND Header
+st.sidebar.markdown("---")
 st.sidebar.markdown("### 📡 Core Command")
 live_monitor = st.sidebar.toggle("Activate Live Defense Feed", value=True)
 
@@ -167,15 +167,15 @@ with st.sidebar.expander("⚙️ Advanced Settings"):
         st.rerun()
 
 # 7. Executive Summary & Value Proposition
-st.markdown("### 🏛️ Executive Summary: Advanced Threat Defense")
-st.markdown("""
-- 🛡️ **Architecture**: Hybrid Stacking Ensemble (XGBoost + RandomForest + LightGBM).
-- 🎯 **Performance**: 99.54% Precision with 0.90% False Positive Rate.
-- 🔍 **Detection**: Specialized in identifying novel Zero-Day anomalies.
-- ⚡ **Mitigation**: Instant autonomous countermeasures via integrated SOAR engine.
-""")
+with st.container():
+    st.markdown("### 🏛️ Executive Summary: Stacking Ensemble Defense")
+    st.write("""
+    This enterprise-grade defense system utilizes a **Hybrid Stacking Ensemble** (XGBoost + RandomForest + LightGBM) to deliver **99.54% Precision**. 
+    By combining multiple AI architectures, the system identifies both known attack signatures and novel **Zero-Day anomalies** with ultra-low false alarms, 
+    triggering instant autonomous countermeasures via our integrated SOAR engine.
+    """)
 
-# 8. Main Dashboard Feed Logic
+# 8. Main Dashboard Feed
 if live_monitor:
     new_data = neural_ingestion(dataset.sample(1))[0]
     st.session_state.history = pd.concat([st.session_state.history, pd.DataFrame([new_data])], ignore_index=True)
@@ -189,65 +189,61 @@ if live_monitor:
         }
         st.session_state.soar_log = pd.concat([st.session_state.soar_log, pd.DataFrame([log_entry])], ignore_index=True)
 
-# Static Placeholder for Main HUD
-hud_container = st.container()
+# ROW 1: Real-Time Performance Metrics
+latest = st.session_state.history.iloc[-1]
+m1, m2, m3 = st.columns(3)
+m1.metric("System Defense Status", latest['status'], delta="LIVE FEED" if live_monitor else "PAUSED", 
+          help="Current operational mode of the AI defense engine.")
+m2.metric("Threat Probability", f"{latest['risk_score']:.2f}%", 
+          help="Neural probability that the current traffic constitutes a malicious event.")
+m3.metric("Neutralized Threats", len(st.session_state.soar_log), 
+          help="Total number of autonomous defensive actions executed to secure the network.")
 
-with hud_container:
-    # ROW 1: Real-Time Performance Metrics
-    latest = st.session_state.history.iloc[-1]
-    m1, m2, m3 = st.columns(3)
-    m1.metric("System Defense Status", latest['status'], delta="LIVE FEED" if live_monitor else "PAUSED", 
-              help="Current operational mode of the AI defense engine.")
-    m2.metric("Threat Probability", f"{latest['risk_score']:.2f}%", 
-              help="Neural probability that the current traffic constitutes a malicious event.")
-    m3.metric("Neutralized Threats", len(st.session_state.soar_log), 
-              help="Total number of autonomous defensive actions executed to secure the network.")
+# Dynamic Alerts
+if latest['status'] == "ANOMALY DETECTED":
+    st.error(f"⚠️ **PROACTIVE MITIGATION**: Autonomous network isolation triggered for {latest['proto']} violation.")
+elif latest['status'] == "SUSPICIOUS - MONITORING":
+    st.warning(f"🔍 **HEURISTIC SCAN**: Flagging unusual {latest['proto']} activity for deep packet inspection.")
 
-    # Dynamic Alerts
-    if latest['status'] == "ANOMALY DETECTED":
-        st.error(f"⚠️ **PROACTIVE MITIGATION**: Autonomous network isolation triggered for {latest['proto']} violation.")
-    elif latest['status'] == "SUSPICIOUS - MONITORING":
-        st.warning(f"🔍 **HEURISTIC SCAN**: Flagging unusual {latest['proto']} activity for deep packet inspection.")
+# ROW 2: Threat Analytics
+st.markdown("### 📊 Global Threat Probability Trend")
+fig_trend = px.line(st.session_state.history, y='risk_score', template="plotly_dark")
+fig_trend.update_traces(line_color='#00FF41', line_width=3)
+fig_trend.update_layout(
+    paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
+    xaxis=dict(title="Inference Sequence", showgrid=True, gridcolor='#333'), 
+    yaxis=dict(title="Risk Probability (%)", showgrid=True, gridcolor='#333'),
+    margin=dict(l=0, r=0, t=10, b=0), height=350
+)
+st.plotly_chart(fig_trend, use_container_width=True)
 
-    # ROW 2: Threat Analytics
-    st.markdown("### 📊 Global Threat Probability Trend")
-    fig_trend = px.line(st.session_state.history, y='risk_score', template="plotly_dark")
-    fig_trend.update_traces(line_color='#00FF41', line_width=3)
-    fig_trend.update_layout(
-        paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
-        xaxis=dict(title="Inference Sequence", showgrid=True, gridcolor='#333'), 
-        yaxis=dict(title="Risk Probability (%)", showgrid=True, gridcolor='#333'),
-        margin=dict(l=0, r=0, t=10, b=0), height=400
-    )
-    st.plotly_chart(fig_trend, use_container_width=True, height=400)
+# ROW 3: Network Intelligence
+c1, c2 = st.columns(2)
+with c1:
+    st.markdown("#### Network Protocol Intelligence")
+    p_fig = px.bar(st.session_state.history['proto'].value_counts().reset_index(), x='proto', y='count', template="plotly_dark", color_discrete_sequence=['#00FF41'])
+    p_fig.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', yaxis=dict(title="Packet Volume", showgrid=True, gridcolor='#333'), xaxis=dict(title="Protocol Type", showgrid=False))
+    st.plotly_chart(p_fig, use_container_width=True)
+with c2:
+    st.markdown("#### Connection State Visibility")
+    s_fig = px.bar(st.session_state.history['state'].value_counts().reset_index(), x='state', y='count', template="plotly_dark", color_discrete_sequence=['#FF3131'])
+    s_fig.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', yaxis=dict(title="Connection Frequency", showgrid=True, gridcolor='#333'), xaxis=dict(title="State Identifier", showgrid=False))
+    st.plotly_chart(s_fig, use_container_width=True)
 
-    # ROW 3: Network Intelligence
-    c1, c2 = st.columns(2)
-    with c1:
-        st.markdown("#### Network Protocol Intelligence")
-        p_counts = st.session_state.history['proto'].value_counts().reset_index()
-        p_fig = px.bar(p_counts, x='proto', y='count', template="plotly_dark", color_discrete_sequence=['#00FF41'])
-        p_fig.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', yaxis=dict(title="Packet Volume", showgrid=True, gridcolor='#333'), xaxis=dict(title="Protocol Type", showgrid=False), height=400)
-        st.plotly_chart(p_fig, use_container_width=True, height=400)
-    with c2:
-        st.markdown("#### Connection State Visibility")
-        s_counts = st.session_state.history['state'].value_counts().reset_index()
-        s_fig = px.bar(s_counts, x='state', y='count', template="plotly_dark", color_discrete_sequence=['#FF3131'])
-        s_fig.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', yaxis=dict(title="Connection Frequency", showgrid=True, gridcolor='#333'), xaxis=dict(title="State Identifier", showgrid=False), height=400)
-        st.plotly_chart(s_fig, use_container_width=True, height=400)
+# ROW 4: Audit & Benchmarking
+st.markdown("---")
+bottom_col1, bottom_col2 = st.columns([1.5, 1.5])
 
-    # ROW 4: Audit & Benchmarking
-    st.markdown("---")
-    bottom_col1, bottom_col2 = st.columns([1.5, 1.5])
-
-    with bottom_col1:
+with bottom_col1:
+    with st.container():
         st.markdown("### 🛡️ Autonomous Countermeasure Audit")
         if not st.session_state.soar_log.empty:
-            st.dataframe(st.session_state.soar_log.tail(5), use_container_width=True, hide_index=True, height=400)
+            st.dataframe(st.session_state.soar_log.tail(5), use_container_width=True, hide_index=True)
         else:
             st.caption("No high-risk defensive actions logged in current session.")
 
-    with bottom_col2:
+with bottom_col2:
+    with st.container():
         st.markdown("### 📊 Enterprise Performance vs. Industry Baseline")
         baseline_data = {
             'Attribute': ['Detection Strategy', 'Zero-Day Success', 'Signal Precision', 'False Positive Rate', 'Response Velocity'],
@@ -255,10 +251,10 @@ with hud_container:
             'Standard AI': ['Single Classifier', '~90%', '~94%', '~3-5%', 'API Sync'],
             'Cyber-Detector': ['Stacking Ensemble', '92.22%', '99.54%', '0.90%', 'Instant SOAR']
         }
-        st.dataframe(pd.DataFrame(baseline_data), use_container_width=True, hide_index=True, height=400)
+        st.dataframe(pd.DataFrame(baseline_data), use_container_width=True, hide_index=True)
 
-    st.markdown("### 🛰️ Real-Time Threat Intelligence Feed")
-    st.dataframe(st.session_state.history.tail(10), use_container_width=True, hide_index=True, height=400)
+st.markdown("### 🛰️ Real-Time Threat Intelligence Feed")
+st.dataframe(st.session_state.history.tail(10), use_container_width=True, hide_index=True)
 
 st.caption("SOC COMMAND PRO | PLATINUM ENTERPRISE BUILD | 99.54% SIGNAL FIDELITY")
 

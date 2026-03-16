@@ -4,6 +4,7 @@ import numpy as np
 import joblib
 import time
 import plotly.express as px
+import kagglehub
 
 # 1. Production SOC Configuration
 st.set_page_config(
@@ -63,7 +64,8 @@ ensemble_model, iso_model, scaler, label_encoders = load_soc_engine()
 
 @st.cache_data
 def load_production_data():
-    return pd.read_csv("/Users/mallikarjunak/.cache/kagglehub/datasets/mrwellsdavid/unsw-nb15/versions/1/UNSW_NB15_testing-set.csv")
+    dataset_path = kagglehub.dataset_download('mrwellsdavid/unsw-nb15')
+    return pd.read_csv(f"{dataset_path}/UNSW_NB15_testing-set.csv")
 
 dataset = load_production_data()
 

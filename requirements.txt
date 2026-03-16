@@ -5,3 +5,4 @@ scikit-learn
 plotly
 lightgbm
 imbalanced-learn
+kagglehub

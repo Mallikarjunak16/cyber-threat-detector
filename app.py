@@ -115,6 +115,15 @@ if 'soar_log' not in st.session_state:
 # 6. Sidebar (Static Benchmarks & Control)
 st.sidebar.markdown("### 🧬 SYSTEM HEALTH")
 st.sidebar.info("PRECISION: 99.54% | FPR: 0.90%")
+
+with st.sidebar.expander("📊 MARKET INTELLIGENCE", expanded=False):
+    market_data = {
+        'System': ['Legacy IDS', 'Standard ML', 'Cyber v2.0'],
+        'Precision': ['85.00%', '94.00%', '99.54%'],
+        'FPR': ['7.00%', '3.00%', '0.90%']
+    }
+    st.sidebar.dataframe(pd.DataFrame(market_data), hide_index=True)
+
 st.sidebar.markdown("---")
 st.sidebar.markdown("### 📡 CORE COMMAND")
 live_monitor = st.sidebar.toggle("ACTIVATE LIVE MONITOR", value=True)

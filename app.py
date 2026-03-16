@@ -8,21 +8,22 @@ import kagglehub
 
 # 1. Production SOC Configuration
 st.set_page_config(
-    layout="wide", 
+    layout="wide",
     page_title="CYBER HUD | ENTERPRISE AI DEFENSE",
     initial_sidebar_state="expanded"
 )
 
 # 2. Forcibly Add Sidebar Code
-st.sidebar.markdown("### 🧬 Enterprise Health")
-st.sidebar.info("🛡️ PRECISION: 99.54% | FPR: 0.90%")
-st.sidebar.markdown("### 📊 Market Intelligence")
-st.sidebar.dataframe({
-    "System": ["Legacy IDS", "Standard ML", "Cyber v2.0"], 
-    "Precision": ["85.00%", "94.00%", "99.54%"], 
-    "FPR": ["7.00%", "3.00%", "0.90%"]
-}, hide_index=True)
-st.sidebar.markdown("---")
+with st.sidebar:
+    st.markdown("### 🧬 Enterprise Health")
+    st.info("🛡️ PRECISION: 99.54% | FPR: 0.90%")
+    st.markdown("### 📊 Market Intelligence")
+    st.dataframe({
+        "System": ["Legacy IDS", "Standard ML", "Cyber v2.0"],
+        "Precision": ["85.00%", "94.00%", "99.54%"],
+        "FPR": ["7.00%", "3.00%", "0.90%"]
+    }, hide_index=True)
+    st.markdown("---")
 
 # 3. Platinum UI Styling (Refined Glassmorphism)
 st.markdown("""

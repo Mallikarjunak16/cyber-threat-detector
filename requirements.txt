@@ -6,3 +6,4 @@ plotly
 lightgbm
 imbalanced-learn
 kagglehub
+kagglehub

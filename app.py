@@ -244,3 +244,35 @@ st.caption("SOC COMMAND PRO | PLATINUM ENTERPRISE BUILD | 99.54% SIGNAL FIDELITY
 if live_monitor:
     time.sleep(1.2)
     st.rerun()
+# --- TRILOGIC SEVERITY ENGINE ---
+st.markdown("---")
+current_threat_score = 98 
+
+if current_threat_score >= 90:
+    severity_level = "CRITICAL (Tier 1)"
+    alert_color = "#FF3131" # Red
+elif current_threat_score >= 70:
+    severity_level = "HIGH (Tier 2)"
+    alert_color = "#FF914D" # Orange
+else:
+    severity_level = "NOMINAL (Tier 3)"
+    alert_color = "#00FF41" # Neon Green
+
+st.markdown(f"### 🎯 SEVERITY CLASSIFICATION: <span style='color:{alert_color}'>{severity_level}</span>", unsafe_allow_html=True)
+st.progress(current_threat_score / 100.0)
+
+# --- TRILOGIC EXPORT MODULE ---
+st.markdown("### 🗄️ SOC Incident Reporting")
+
+demo_csv_log = """Timestamp,Target IP,Anomaly Type,Severity Score,Autonomous Action
+2026-03-17 08:30:12,192.168.1.105,Zero-Day TCP Violation,99.14,Isolated
+2026-03-17 08:31:05,10.0.0.42,DDoS Attempt Payload,88.50,Traffic Dropped
+2026-03-17 08:40:22,172.16.254.1,Unauthorized Access,92.10,Account Locked
+"""
+
+st.download_button(
+    label="⬇️ DOWNLOAD TRI-LOGIC INCIDENT REPORT (CSV)",
+    data=demo_csv_log,
+    file_name="TriLogic_Threat_Report.csv",
+    mime="text/csv"
+)

@@ -276,3 +276,8 @@ st.download_button(
     file_name="TriLogic_Threat_Report.csv",
     mime="text/csv"
 )
+
+# LIVE MONITOR MUST BE THE ABSOLUTE LAST THING IN THE FILE
+if live_monitor:
+    time.sleep(1.2)
+    st.rerun()
